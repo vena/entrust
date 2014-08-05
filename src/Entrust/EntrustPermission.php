@@ -3,9 +3,9 @@
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-use LaravelBook\Ardent\Ardent;
+use Illuminate\Database\Eloquent\Model;
 
-class EntrustPermission extends Ardent
+class EntrustPermission extends Model
 {
     /**
      * The database table used by the model.
@@ -15,14 +15,17 @@ class EntrustPermission extends Ardent
     protected $table;
 
     /**
-     * Ardent validation rules.
-     *
-     * @var array
+     * Boot the model
      */
-    public static $rules = array(
-        'name' => 'required|between:4,128',
-        'display_name' => 'required|between:4,128'
-    );
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($perm)
+        {
+            return $perm->beforeDelete();
+        });
+    }
 
     /**
      * Creates a new instance of the model.
