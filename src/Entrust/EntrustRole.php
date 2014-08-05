@@ -44,7 +44,7 @@ class EntrustRole extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(Config::get('auth.model'), Config::get('entrust::assigned_roles_table'));
+        return $this->belongsToMany(Config::get('auth.model'), Config::get('entrust::assigned_roles_table'), 'role_id', 'user_id');
     }
 
     /**
@@ -57,7 +57,7 @@ class EntrustRole extends Model
         // To maintain backwards compatibility we'll catch the exception if the Permission table doesn't exist.
         // TODO remove in a future version.
         try {
-			return $this->belongsToMany(Config::get('entrust::permission'), Config::get('entrust::permission_role_table'));
+            return $this->belongsToMany(Config::get('entrust::permission'), Config::get('entrust::permission_role_table'), 'role_id', 'permission_id');
         } catch (Exception $e) {
             // do nothing
         }
