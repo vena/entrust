@@ -42,7 +42,7 @@ class EntrustPermission extends Ardent
      */
     public function roles()
     {
-        return $this->belongsToMany(Config::get('entrust::role'), Config::get('entrust::permission_role_table'));
+        return $this->belongsToMany(Config::get('entrust::role'), Config::get('entrust::permission_role_table'), 'permission_id', 'role_id');
     }
 
     /**
